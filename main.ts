@@ -1,8 +1,8 @@
-const enum ButtonChoice {
+const enum Buttons {
     //% block="1"
-    button1 = 5,
+    button1,
     //% block="2"
-    button2 = 11
+    button2
 }
 
 //% color="#05d7f7"
@@ -11,14 +11,15 @@ namespace RekaCipta {
     //% block="Button %buttonchoice pressed"
     //% group="Sensor"
     //% weight=4
-    export function isButtonPressed(buttonChoice: ButtonChoice): boolean {
-        let button: Button;
-        if (buttonChoice == ButtonChoice.button1) {
-            button = Button.A;
-        } else {
-            button = Button.B;
+    export function buttonsensor(buttonchoice: Buttons): boolean {
+        let pin: DigitalPin;
+        if (buttonchoice == Buttons.button1) {
+            pin = DigitalPin.P5;
         }
-        return input.buttonIsPressed(button);
+        if (buttonchoice == Buttons.button2) {
+            pin = DigitalPin.P11;
+        }
+        return pins.digitalReadPin(pin) == 0;
     }
     //% block="Sound Sensor detected sound"
     //% group="Sensor"
