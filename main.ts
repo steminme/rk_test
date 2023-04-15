@@ -1,3 +1,22 @@
+const enum NeoPixels {
+    //% block="1"
+    neopixelled0,
+    //% block="2"
+    neopixelled1,
+    //% block="3"
+    neopixelled2,
+    //% block="4"
+    neopixelled3,
+    //% block="5"
+    neopixelled4,
+    //% block="6"
+    neopixelled5,
+    //% block="7"
+    neopixelled6,
+    //% block="8"
+    neopixelled7
+}
+
 const enum Buttons {
     //% block="1"
     button1,
@@ -5,7 +24,7 @@ const enum Buttons {
     button2
 }
 
-//% color="#05d7f7"
+//% color="#E4D00A"
 //% groups="['Sensor','Output']"
 namespace RekaCipta {
     //% block="Button | %buttonchoice | pressed"
@@ -53,13 +72,22 @@ namespace RekaCipta {
     export function buzzertone(tone: number): void {
         let buzzerpin = AnalogPin.P16;
         pins.analogWritePin(buzzerpin, tone);
-        pins.analogSetPeriod(buzzerpin,500);
+        pins.analogSetPeriod(buzzerpin, 500);
     }
 
     //% block="Buzzer Off"
     //% group="Output"
     //% weight=6
     export function buzzeroff(): void {
-        pins.analogWritePin(AnalogPin.P16,0);
+        pins.analogWritePin(AnalogPin.P16, 0);
+    }
+
+    //% block="NeoPixel LED%neopixelChoice Red:%red Green:%green Blue:%blue"
+    //% red.defl=255
+    //% green.defl=255
+    //% blue.defl=255 
+    //% weight=4
+    export function neopixel(neopixelChoice: NeoPixels, red: number, green: number, blue: number): void {
+
     }
 }
