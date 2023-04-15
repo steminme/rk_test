@@ -8,58 +8,58 @@ const enum Buttons {
 //% color="#05d7f7"
 //% groups="['Sensor','Output']"
 namespace RekaCipta {
-    //% block="Button %buttonchoice pressed"
+    //% block="Button | %buttonchoice | pressed"
     //% group="Sensor"
     //% weight=4
-    export function buttonsensor(buttonchoice: Buttons): boolean {
-        let pin: DigitalPin;
+    export function button(buttonchoice: Buttons): boolean {
+        let buttonpin: DigitalPin;
         if (buttonchoice == Buttons.button1) {
-            pin = DigitalPin.P5;
+            buttonpin = DigitalPin.P5;
         }
         if (buttonchoice == Buttons.button2) {
-            pin = DigitalPin.P11;
+            buttonpin = DigitalPin.P11;
         }
-        return pins.digitalReadPin(pin) == 0;
+        return pins.digitalReadPin(buttonpin) == 0;
     }
+
     //% block="Sound Sensor detected sound"
     //% group="Sensor"
     //% weight=3
     export function soundsensor(): boolean {
-        let soundsensorval: boolean
-        if (input.pinIsPressed(TouchPin.P0)) {
-            soundsensorval = true;
-        }
-        else {
-            soundsensorval = false;
-        }
-        return soundsensorval;
+        let soundpin = DigitalPin.P0;
+        return pins.digitalReadPin(soundpin) == 0;
     }
+
     //% block="Potentiometer value"
     //% group="Sensor"
     //% weight=2
     export function potentiometer(): number {
-        let potentiometerval: number
-        potentiometerval = (pins.analogReadPin(AnalogPin.P1));
-        return potentiometerval;
+        let potentiometerpin = AnalogPin.P1;
+        return pins.analogReadPin(potentiometerpin);
     }
+
     //% block="Infrared Sensor detected object"
     //% group="Sensor"
     //% weight=1
-    export function irsensor() {
-        let irsensorval: boolean
-        if (input.pinIsPressed(TouchPin.P2)) {
-            irsensorval = true;
-        }
-        else {
-            irsensorval = false;
-        }
-        return irsensorval;
+    export function irsensor(): boolean {
+        let irpin = DigitalPin.P2;
+        return pins.digitalReadPin(irpin) == 0;
+    }
+
+    //% block="Buzzer tone | %tone"
+    //% tone.defl=100
+    //% group="Output"
+    //% weight=7
+    export function buzzertone(tone: number): void {
+        let buzzerpin = AnalogPin.P16;
+        pins.analogWritePin(buzzerpin, tone);
+        pins.analogSetPeriod(buzzerpin,500);
     }
 
     //% block="Buzzer Off"
     //% group="Output"
-    //% weight=4
-    export function buzzeroff() {
-
+    //% weight=6
+    export function buzzeroff(): void {
+        pins.analogWritePin(AnalogPin.P16,0);
     }
 }
