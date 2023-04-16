@@ -1,20 +1,20 @@
 const enum NeoPixels {
     //% block="1"
-    neopixelled0,
+    led1 = 0,
     //% block="2"
-    neopixelled1,
+    led2 = 1,
     //% block="3"
-    neopixelled2,
+    led3 = 2,
     //% block="4"
-    neopixelled3,
+    led4 = 3,
     //% block="5"
-    neopixelled4,
+    led5 = 4,
     //% block="6"
-    neopixelled5,
+    led6 = 5,
     //% block="7"
-    neopixelled6,
+    led7 = 6,
     //% block="8"
-    neopixelled7
+    led8 = 7
 }
 
 const enum Buttons {
@@ -22,6 +22,22 @@ const enum Buttons {
     button1,
     //% block="2"
     button2
+}
+
+namespace ws2812b {
+    //% shim=sendBufferAsm
+    export function sendBuffer(buf: Buffer, pin: DigitalPin) {
+    }
+
+    //% shim=setBufferMode
+    export function setBufferMode(pin: DigitalPin, mode: number) {
+
+    }
+
+    export const BUFFER_MODE_RGB = 1
+    export const BUFFER_MODE_RGBW = 2
+    export const BUFFER_MODE_RGB_RGB = 3
+    export const BUFFER_MODE_AP102 = 4
 }
 
 //% color="#E4D00A"
@@ -89,6 +105,13 @@ namespace RekaCipta {
     //% group="Output"
     //% weight=4
     export function neopixel(neopixelChoice: NeoPixels, red: number, green: number, blue: number): void {
-
+        let start = neopixelChoice * 3
+        let colors = pins.createBuffer(24)
+        for (let i = 0; i < 24; i += 3) {
+            colors[i + 0] = (i == start) ? green : 0
+            colors[i + 1] = (i == start + 1) ? red : 0
+            colors[i + 2] = (i == start + 2) ? blue : 0
+        }
+        ws2812b.sendBuffer(colors, DigitalPin.P8)
     }
 }
