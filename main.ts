@@ -27,7 +27,7 @@ const enum Buttons {
 //% color="#E4D00A"
 //% groups="['Sensor','Output']"
 namespace RekaCipta {
-    //% block="Button | %buttonchoice | pressed"
+    //% block="Button|%buttonchoice|pressed"
     //% group="Sensor"
     //% weight=4
     export function button(buttonchoice: Buttons): boolean {
@@ -65,7 +65,7 @@ namespace RekaCipta {
         return pins.digitalReadPin(irpin) == 0;
     }
 
-    //% block="Buzzer tone | %tone"
+    //% block="Buzzer tone|%tone"
     //% tone.defl=100
     //% group="Output"
     //% weight=7
@@ -82,10 +82,11 @@ namespace RekaCipta {
         pins.analogWritePin(AnalogPin.P16, 0);
     }
 
-    //% block="NeoPixel LED%neopixelChoice Red:%red Green:%green Blue:%blue"
+    //% block="NeoPixel LED:%neopixelChoice|Red:%red|Green:%green|Blue:%blue"
     //% red.defl=255
     //% green.defl=255
-    //% blue.defl=255 
+    //% blue.defl=255
+    //% group="Output"
     //% weight=4
     export function neopixel(neopixelChoice: NeoPixels, red: number, green: number, blue: number): void {
 
