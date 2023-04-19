@@ -3,7 +3,8 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "neopixel": "github:microsoft/pxt-neopixel#v0.7.3"
+        "radio": "*",
+        "microphone": "*"
     },
     "files": [
         "main.ts",
