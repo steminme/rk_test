@@ -1,27 +1,27 @@
-const enum NeoPixels {
+enum NeoPixelLED {
     //% block="1"
-    neopixelled0,
+    L1,
     //% block="2"
-    neopixelled1,
+    L2,
     //% block="3"
-    neopixelled2,
+    L3,
     //% block="4"
-    neopixelled3,
+    L4,
     //% block="5"
-    neopixelled4,
+    L5,
     //% block="6"
-    neopixelled5,
+    L6,
     //% block="7"
-    neopixelled6,
+    L7,
     //% block="8"
-    neopixelled7
+    L8
 }
 
-const enum Buttons {
+enum ButtonPin {
     //% block="1"
-    button1,
+    B1,
     //% block="2"
-    button2
+    B2
 }
 
 //% color="#E4D00A"
@@ -30,55 +30,55 @@ namespace RekaCipta {
     //% block="Button | %buttonchoice | pressed"
     //% group="Sensor"
     //% weight=4
-    export function button(buttonchoice: Buttons): boolean {
-        let buttonpin: DigitalPin;
-        if (buttonchoice == Buttons.button1) {
-            buttonpin = DigitalPin.P5;
+    export function Button(ButtonChoice: ButtonPin): boolean {
+        let ButtonState: DigitalPin;
+        if (ButtonChoice == ButtonPin.B1) {
+            ButtonState = DigitalPin.P5;
         }
-        if (buttonchoice == Buttons.button2) {
-            buttonpin = DigitalPin.P11;
+        if (ButtonChoice == ButtonPin.B2) {
+            ButtonState = DigitalPin.P11;
         }
-        return pins.digitalReadPin(buttonpin) == 0;
+        return pins.digitalReadPin(ButtonState) == 0;
     }
 
     //% block="Sound Sensor detected sound"
     //% group="Sensor"
     //% weight=3
-    export function soundsensor(): boolean {
-        let soundpin = DigitalPin.P0;
-        return pins.digitalReadPin(soundpin) == 0;
+    export function SoundSensor(): boolean {
+        let SoundSensorPin = DigitalPin.P0;
+        return pins.digitalReadPin(SoundSensorPin) == 0;
     }
 
     //% block="Potentiometer value"
     //% group="Sensor"
     //% weight=2
-    export function potentiometer(): number {
-        let potentiometerpin = AnalogPin.P1;
-        return pins.analogReadPin(potentiometerpin);
+    export function Potentiometer(): number {
+        let PotentiometerPin = AnalogPin.P1;
+        return pins.analogReadPin(PotentiometerPin);
     }
 
     //% block="Infrared Sensor detected object"
     //% group="Sensor"
     //% weight=1
-    export function irsensor(): boolean {
-        let irpin = DigitalPin.P2;
-        return pins.digitalReadPin(irpin) == 0;
+    export function IrSensor(): boolean {
+        let IrSensorPin = DigitalPin.P2;
+        return pins.digitalReadPin(IrSensorPin) == 0;
     }
 
     //% block="Buzzer tone | %tone"
     //% tone.defl=100
     //% group="Output"
     //% weight=7
-    export function buzzertone(tone: number): void {
-        let buzzerpin = AnalogPin.P16;
-        pins.analogWritePin(buzzerpin, tone);
-        pins.analogSetPeriod(buzzerpin, 500);
+    export function BuzzerTone(tone: number): void {
+        let BuzzerPin = AnalogPin.P16;
+        pins.analogWritePin(BuzzerPin, tone);
+        pins.analogSetPeriod(BuzzerPin, 500);
     }
 
     //% block="Buzzer Off"
     //% group="Output"
     //% weight=6
-    export function buzzeroff(): void {
+    export function BuzzerOff(): void {
         pins.analogWritePin(AnalogPin.P16, 0);
     }
 
@@ -87,7 +87,7 @@ namespace RekaCipta {
     //% green.defl=255
     //% blue.defl=255 
     //% weight=4
-    export function neopixel(neopixelChoice: NeoPixels, red: number, green: number, blue: number): void {
+    export function Neopixel(neopixelChoice: NeoPixelLED, red: number, green: number, blue: number): void {
 
     }
 }
