@@ -65,21 +65,25 @@ namespace RekaCipta {
         return pins.digitalReadPin(IrSensorPin) == 0;
     }
 
-    //% block="Buzzer tone | %tone"
-    //% tone.defl=100
+    //% block="Buzzer tone | %Tone"
+    //% Tone.defl=100
     //% group="Output"
     //% weight=7
-    export function BuzzerTone(tone: number): void {
+    export function BuzzerTone(Tone: number): void {
         let BuzzerPin = AnalogPin.P16;
-        pins.analogWritePin(BuzzerPin, tone);
-        pins.analogSetPeriod(BuzzerPin, 500);
+        pins.analogSetPitchPin(BuzzerPin);
+        pins.analogPitch(Tone, 100);
+        //pins.analogWritePin(BuzzerPin, Tone)
+        //pins.analogSetPeriod(BuzzerPin, 500)
     }
 
     //% block="Buzzer Off"
     //% group="Output"
     //% weight=6
     export function BuzzerOff(): void {
-        pins.analogWritePin(AnalogPin.P16, 0);
+        let BuzzerPin = AnalogPin.P16;
+        pins.analogSetPitchPin(BuzzerPin);
+        pins.analogPitch(0, 0);
     }
 
     //% block="NeoPixel LED%neopixelChoice Red:%red Green:%green Blue:%blue"
