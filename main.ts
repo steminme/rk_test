@@ -1,29 +1,3 @@
-enum NeoPixelLED {
-    //% block="1"
-    L1,
-    //% block="2"
-    L2,
-    //% block="3"
-    L3,
-    //% block="4"
-    L4,
-    //% block="5"
-    L5,
-    //% block="6"
-    L6,
-    //% block="7"
-    L7,
-    //% block="8"
-    L8
-}
-
-enum ButtonPin {
-    //% block="1"
-    B1,
-    //% block="2"
-    B2
-}
-
 //% color="#E4D00A"
 //% groups="['Sensor','Output']"
 namespace RekaCipta {
@@ -39,6 +13,12 @@ namespace RekaCipta {
             ButtonState = DigitalPin.P11;
         }
         return pins.digitalReadPin(ButtonState) == 0;
+    }
+    export enum ButtonPin {
+        //% block="1"
+        B1,
+        //% block="2"
+        B2
     }
 
     //% block="Sound Sensor detected sound"
@@ -72,9 +52,9 @@ namespace RekaCipta {
     export function BuzzerTone(Tone: number): void {
         let BuzzerPin = AnalogPin.P16;
         pins.analogSetPitchPin(BuzzerPin);
-        pins.analogPitch(Tone, 100);
-        //pins.analogWritePin(BuzzerPin, Tone)
-        //pins.analogSetPeriod(BuzzerPin, 500)
+        pins.analogPitch(Tone, 0);
+        pins.analogWritePin(BuzzerPin, Tone);
+        pins.analogSetPeriod(BuzzerPin, 500);
     }
 
     //% block="Buzzer Off"
@@ -84,14 +64,35 @@ namespace RekaCipta {
         let BuzzerPin = AnalogPin.P16;
         pins.analogSetPitchPin(BuzzerPin);
         pins.analogPitch(0, 0);
+        pins.analogWritePin(BuzzerPin, 0);
     }
 
-    //% block="NeoPixel LED%neopixelChoice Red:%red Green:%green Blue:%blue"
-    //% red.defl=255
-    //% green.defl=255
-    //% blue.defl=255 
+    //% block="NeoPixel LED%neopixelChoice Red:%red Green:%green Blue:%blue" inlineInputMode=inline
+    //% red.min=0 red.max=255 red.defl=255
+    //% green.min=0 green.max=255 green.defl=255
+    //% blue.min=0 blue.max=255 blue.defl=255 
     //% weight=4
-    export function Neopixel(neopixelChoice: NeoPixelLED, red: number, green: number, blue: number): void {
-
+    export function Neopixel(NeopixelLEDnum: NeopixelLED, red: number, green: number, blue: number): void {
+        let Strip = neopixel.create(DigitalPin.P8, 8, NeoPixelMode.RGB);
+        Strip.setPixelColor(NeopixelLEDnum, neopixel.rgb(red, green, blue));
+        Strip.show();
+    }
+    export enum NeopixelLED {
+        //% block="1"
+        L1 = 0,
+        //% block="2"
+        L2 = 1,
+        //% block="3"
+        L3 = 2,
+        //% block="4"
+        L4 = 3,
+        //% block="5"
+        L5 = 4,
+        //% block="6"
+        L6 = 5,
+        //% block="7"
+        L7 = 6,
+        //% block="8"
+        L8 = 7
     }
 }
