@@ -1,7 +1,7 @@
 //% color="#E4D00A"
 //% groups="['Sensor','Output']"
 namespace RekaCipta {
-    //% block="Button | %buttonchoice | pressed"
+    //% block="Button %ButtonChoice pressed"
     //% group="Sensor"
     //% weight=4
     export function Button(ButtonChoice: ButtonPin): boolean {
@@ -66,14 +66,13 @@ namespace RekaCipta {
         pins.analogPitch(0, 0);
         pins.analogWritePin(BuzzerPin, 0);
     }
-
-    //% block="NeoPixel LED%neopixelChoice Red:%red Green:%green Blue:%blue" inlineInputMode=inline
+    let Strip = neopixel.create(DigitalPin.P8, 8, NeoPixelMode.RGB);
+    //% block="NeoPixel LED%NeopixelLEDnum Red:%red Green:%green Blue:%blue" inlineInputMode=inline
     //% red.min=0 red.max=255 red.defl=255
     //% green.min=0 green.max=255 green.defl=255
     //% blue.min=0 blue.max=255 blue.defl=255 
     //% weight=4
     export function Neopixel(NeopixelLEDnum: NeopixelLED, red: number, green: number, blue: number): void {
-        let Strip = neopixel.create(DigitalPin.P8, 8, NeoPixelMode.RGB);
         Strip.setPixelColor(NeopixelLEDnum, neopixel.rgb(red, green, blue));
         Strip.show();
     }
@@ -94,5 +93,11 @@ namespace RekaCipta {
         L7 = 6,
         //% block="8"
         L8 = 7
+    }
+    //% block="NeoPixel LED%NeopixelLEDnum Off"
+    //% weight=3
+    export function NeopixelOff(NeopixelLEDnum: NeopixelLED): void {
+        Strip.setPixelColor(NeopixelLEDnum, neopixel.rgb(0, 0, 0));
+        Strip.show();
     }
 }
