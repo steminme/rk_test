@@ -41,20 +41,46 @@ namespace RekaCipta {
     //% group="Sensor"
     //% weight=1
     export function IrSensor(): boolean {
-        let IrSensorPin = DigitalPin.P2;
+        let IrSensorPin = pins.digitalReadPin(DigitalPin.P2);
+        let IrSensorState;
         return pins.digitalReadPin(IrSensorPin) == 0;
     }
 
-    //% block="Buzzer tone | %Tone"
+    PCA9685.reset(PCA9685.chipAddress("0x40"));
+    //% block="LED %LedColorChoice %LedStateChoice"
+    //% group="Output"
+    //% weight=8
+    export function SingleColorLED(LedColorChoice: LedColor, LedStateChoice: LedState): void {
+        PCA9685.setLedDutyCycle(LedColorChoice - 0, LedStateChoice, PCA9685.chipAddress("0x40"));
+    }
+
+    export enum LedColor {
+        //% block="Green"
+        Green = 11,
+        //% block="Yellow"
+        Yellow = 10,
+        //% block="Red"
+        Red = 9
+    }
+
+    export enum LedState {
+        //% block="On"
+        OnLED = 100,
+        //% block="Off"
+        OffLED = 0
+    }
+    
+    //% block="Buzzer tone %Tone"
     //% Tone.defl=100
     //% group="Output"
     //% weight=7
     export function BuzzerTone(Tone: number): void {
         let BuzzerPin = AnalogPin.P16;
         pins.analogSetPitchPin(BuzzerPin);
+        pins.analogSetPitchVolume(255);
         pins.analogPitch(Tone, 0);
-        pins.analogWritePin(BuzzerPin, Tone);
-        pins.analogSetPeriod(BuzzerPin, 500);
+        //pins.analogWritePin(BuzzerPin, Tone);
+        //pins.analogSetPeriod(BuzzerPin, 500);
     }
 
     //% block="Buzzer Off"
@@ -64,16 +90,144 @@ namespace RekaCipta {
         let BuzzerPin = AnalogPin.P16;
         pins.analogSetPitchPin(BuzzerPin);
         pins.analogPitch(0, 0);
-        pins.analogWritePin(BuzzerPin, 0);
+        //pins.analogWritePin(BuzzerPin, 0);
     }
+
+    //% block="Buzzer note %NoteChoice for %DurationChoice"
+    //% group="Output"
+    //% weight=5
+    export function BuzzerNote(NoteChoice: Note, DurationChoice: Duration): void{
+        let BuzzerPin = AnalogPin.P16;
+        pins.analogSetPitchPin(BuzzerPin);
+        pins.analogSetPitchVolume(255);
+        pins.analogPitch(NoteChoice, DurationChoice*1000);
+        basic.pause(DurationChoice*1000*1.3)
+    }
+    export enum Note {
+        B0 = 31,
+        C1 = 33,
+        CS1 = 35,
+        D1 = 37,
+        DS1 = 39,
+        E1 = 41,
+        F1 = 44,
+        FS1 = 46,
+        G1 = 49,
+        GS1 = 52,
+        A1 = 55,
+        AS1 = 58,
+        B1 = 62,
+        C2 = 65,
+        CS2 = 69,
+        D2 = 73,
+        DS2 = 78,
+        E2 = 82,
+        F2 = 87,
+        FS2 = 83,
+        G2 = 98,
+        GS2 = 104,
+        A2 = 110,
+        AS2 = 117,
+        B2 = 123,
+        C3 = 131,
+        CS3 = 139,
+        D3 = 147,
+        DS3 = 156,
+        E3 = 165,
+        F3 = 175,
+        FS3 = 185,
+        G3 = 196,
+        GS3 = 208,
+        A3 = 220,
+        AS3 = 233,
+        B3 = 247,
+        C4 = 262,
+        CS4 = 277,
+        D4 = 294,
+        DS4 = 311,
+        E4 = 330,
+        F4 = 349,
+        FS4 = 370,
+        G4 = 392,
+        GS4 = 415,
+        A4 = 440,
+        AS4 = 466,
+        B4 = 494,
+        C5 = 523,
+        CS5 = 554,
+        D5 = 587,
+        DS5 = 622,
+        E5 = 659,
+        F5 = 698,
+        FS5 = 740,
+        G5 = 784,
+        GS5 = 831,
+        A5 = 880,
+        AS5 = 932,
+        B5 = 988,
+        C6 = 1047,
+        CS6 = 1109,
+        D6 = 1175,
+        DS6 = 1245,
+        E6 = 1319,
+        F6 = 1397,
+        FS6 = 1480,
+        G6 = 1568,
+        GS6 = 1661,
+        A6 = 1760,
+        AS6 = 1865,
+        B6 = 1976,
+        C7 = 2093,
+        CS7 = 2217,
+        D7 = 2349,
+        DS7 = 2489,
+        E7 = 2637,
+        F7 = 2794,
+        FS7 = 2960,
+        G7 = 3136,
+        GS7 = 3322,
+        A7 = 3520,
+        AS7 = 3729,
+        B7 = 3951,
+        C8 = 4186,
+        CS8 = 4435,
+        D8 = 4699,
+        DS8 = 4978,
+        REST = 0
+    }
+    export enum Duration{
+        //% block="One(1)"
+        One = 1,
+        //% block="Half(1/2)"
+        Half = 0.5,
+        //% block="Quarter(1/4)"
+        Quarter = 0.25,
+        //% block="Eighth(1/8)"
+        Eighth = 0.125,
+        //% block="Sixteenth(1/16)"
+        Sixteenth = 0.0625,
+        //% block="Double(2)"
+        Double = 2,
+        //% block="Quadraple(4)"
+        Quadraple = 4
+    }
+
     let Strip = neopixel.create(DigitalPin.P8, 8, NeoPixelMode.RGB);
-    //% block="NeoPixel LED%NeopixelLEDnum Red:%red Green:%green Blue:%blue" inlineInputMode=inline
+    //% block="NeoPixel LED %NeopixelLEDnum Red:%red Green:%green Blue:%blue" inlineInputMode=inline
     //% red.min=0 red.max=255 red.defl=255
     //% green.min=0 green.max=255 green.defl=255
-    //% blue.min=0 blue.max=255 blue.defl=255 
+    //% blue.min=0 blue.max=255 blue.defl=255
+    //% group="Output"
     //% weight=4
     export function Neopixel(NeopixelLEDnum: NeopixelLED, red: number, green: number, blue: number): void {
         Strip.setPixelColor(NeopixelLEDnum, neopixel.rgb(red, green, blue));
+        Strip.show();
+    }
+    //% block="NeoPixel LED %NeopixelLEDnum Off"
+    //% group="Output"
+    //% weight=3
+    export function NeopixelOff(NeopixelLEDnum: NeopixelLED): void {
+        Strip.setPixelColor(NeopixelLEDnum, neopixel.rgb(0, 0, 0));
         Strip.show();
     }
     export enum NeopixelLED {
@@ -94,10 +248,61 @@ namespace RekaCipta {
         //% block="8"
         L8 = 7
     }
-    //% block="NeoPixel LED%NeopixelLEDnum Off"
-    //% weight=3
-    export function NeopixelOff(NeopixelLEDnum: NeopixelLED): void {
-        Strip.setPixelColor(NeopixelLEDnum, neopixel.rgb(0, 0, 0));
-        Strip.show();
+
+    PCA9685.reset(PCA9685.chipAddress("0x40"));
+    //% block="Servo %ServoChoice move to %Angle"
+    //% Angle.defl=90
+    //% group="Output"
+    //% weight=2
+    export function Servo(ServoChoice: ServoNum, Angle: number): void {
+        PCA9685.setServoPosition(ServoChoice, Angle, PCA9685.chipAddress("0x40"));
+    }
+    export enum ServoNum {
+        //% block="1"
+        Servo1 = 6,
+        //% block="2"
+        Servo2 = 7,
+        //% block="3"
+        Servo3 = 8
+    }
+
+    PCA9685.reset(PCA9685.chipAddress("0x40"));
+    //% block="Motor %MotorChoice direction %DirectionChoice speed %Speed"
+    //% Speed.min=0 Speed.max=255 Speed.defl=255
+    //% group="Output"
+    //% weight=1
+    export function Motor(MotorChoice: MotorNum, DirectionChoice: Direction, Speed: number): void {
+        if (MotorChoice == MotorNum.MotorA) {
+            if (DirectionChoice == Direction.Forward) {
+                PCA9685.setPinPulseRange(PCA9685.PinNum.Pin4, 4095, 4095, PCA9685.chipAddress("0x40"));
+                PCA9685.setLedDutyCycle(PCA9685.LEDNum.LED4, ((Speed / 255) * 100), PCA9685.chipAddress("0x40"));
+            }
+            else if (DirectionChoice == Direction.Backward) {
+                PCA9685.setPinPulseRange(PCA9685.PinNum.Pin4, 0, 4095, PCA9685.chipAddress("0x40"));
+                PCA9685.setLedDutyCycle(PCA9685.LEDNum.LED4, (100 - ((Speed / 255) * 100)), PCA9685.chipAddress("0x40"));
+            }
+        }
+        if (MotorChoice == MotorNum.MotorB) {
+            if (DirectionChoice == Direction.Forward) {
+                PCA9685.setPinPulseRange(PCA9685.PinNum.Pin1, 4095, 4095, PCA9685.chipAddress("0x40"));
+                PCA9685.setLedDutyCycle(PCA9685.LEDNum.LED3, ((Speed / 255) * 100), PCA9685.chipAddress("0x40"));
+            }
+            else if (DirectionChoice == Direction.Backward) {
+                PCA9685.setPinPulseRange(PCA9685.PinNum.Pin1, 0, 4095, PCA9685.chipAddress("0x40"));
+                PCA9685.setLedDutyCycle(PCA9685.LEDNum.LED3, (100 - ((Speed / 255) * 100)), PCA9685.chipAddress("0x40"));
+            }
+        }
+    }
+    export enum MotorNum {
+        //% block="A"
+        MotorA,
+        //% block="B"
+        MotorB
+    }
+    export enum Direction {
+        //% block="Forward"
+        Forward,
+        //% block="Backward"
+        Backward
     }
 }
