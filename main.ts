@@ -72,6 +72,7 @@ namespace RekaCipta {
     
     //% block="Buzzer tone %Tone"
     //% Tone.defl=100
+    //% parts="headphone"
     //% group="Output"
     //% weight=7
     export function BuzzerTone(Tone: number): void {
@@ -84,6 +85,7 @@ namespace RekaCipta {
     }
 
     //% block="Buzzer Off"
+    //% parts="headphone"
     //% group="Output"
     //% weight=6
     export function BuzzerOff(): void {
@@ -94,14 +96,43 @@ namespace RekaCipta {
     }
 
     //% block="Buzzer note %NoteChoice for %DurationChoice"
+    //% parts="headphone"
     //% group="Output"
     //% weight=5
     export function BuzzerNote(NoteChoice: Note, DurationChoice: Duration): void{
         let BuzzerPin = AnalogPin.P16;
         pins.analogSetPitchPin(BuzzerPin);
         pins.analogSetPitchVolume(255);
-        pins.analogPitch(NoteChoice, DurationChoice*1000);
-        basic.pause(DurationChoice*1000*1.3)
+        switch(DurationChoice){
+            case Duration.One:
+            pins.analogPitch(NoteChoice, 1 * 1000);
+            basic.pause(1 * 1000 * 1.3);
+            break;
+            case Duration.Half:
+            pins.analogPitch(NoteChoice, 0.5 * 1000);
+            basic.pause(0.5 * 1000 * 1.3);
+            break;
+            case Duration.Quarter:
+            pins.analogPitch(NoteChoice, 0.25 * 1000);
+            basic.pause(0.25 * 1000 * 1.3);
+            break;
+            case Duration.Eighth:
+            pins.analogPitch(NoteChoice, 0.125 * 1000);
+            basic.pause(0.125 * 1000 * 1.3);
+            break;
+            case Duration.Sixteenth:
+            pins.analogPitch(NoteChoice, 0.0625 * 1000);
+            basic.pause(0.0625 * 1000 * 1.3);
+            break;
+            case Duration.Double:
+            pins.analogPitch(NoteChoice, 2 * 1000);
+            basic.pause(2 * 1000 * 1.3);
+            break;
+            case Duration.Quadraple:
+            pins.analogPitch(NoteChoice, 4 * 1000);
+            basic.pause(4 * 1000 * 1.3);
+            break;
+        }
     }
     export enum Note {
         B0 = 31,
@@ -197,19 +228,19 @@ namespace RekaCipta {
     }
     export enum Duration{
         //% block="One(1)"
-        One = 1,
+        One,
         //% block="Half(1/2)"
-        Half = 0.5,
+        Half,
         //% block="Quarter(1/4)"
-        Quarter = 0.25,
+        Quarter,
         //% block="Eighth(1/8)"
-        Eighth = 0.125,
+        Eighth,
         //% block="Sixteenth(1/16)"
-        Sixteenth = 0.0625,
+        Sixteenth,
         //% block="Double(2)"
-        Double = 2,
+        Double,
         //% block="Quadraple(4)"
-        Quadraple = 4
+        Quadraple
     }
 
     let Strip = neopixel.create(DigitalPin.P8, 8, NeoPixelMode.RGB);
