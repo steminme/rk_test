@@ -69,7 +69,7 @@ namespace RekaCipta {
         //% block="Off"
         OffLED = 0
     }
-    
+
     //% block="Buzzer tone %Tone"
     //% Tone.defl=100
     //% parts="headphone"
@@ -77,7 +77,8 @@ namespace RekaCipta {
     //% weight=7
     export function BuzzerTone(Tone: number): void {
         let BuzzerPin = AnalogPin.P16;
-        pins.analogSetPitchPin(BuzzerPin);
+        //pins.analogSetPitchPin(BuzzerPin);
+        pins.analogWritePin(BuzzerPin, 1023);
         pins.analogSetPitchVolume(255);
         pins.analogPitch(Tone, 0);
         //pins.analogWritePin(BuzzerPin, Tone);
