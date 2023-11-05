@@ -26,6 +26,7 @@ namespace RekaCipta {
     //% weight=3
     export function SoundSensor(): boolean {
         let SoundSensorPin = DigitalPin.P0;
+        pins.setPull(SoundSensorPin, PinPullMode.PullUp);
         return pins.digitalReadPin(SoundSensorPin) == 0;
     }
 
@@ -41,8 +42,8 @@ namespace RekaCipta {
     //% group="Sensor"
     //% weight=1
     export function IrSensor(): boolean {
-        let IrSensorPin = pins.digitalReadPin(DigitalPin.P2);
-        let IrSensorState;
+        let IrSensorPin = DigitalPin.P2;
+        pins.setPull(IrSensorPin, PinPullMode.PullUp);
         return pins.digitalReadPin(IrSensorPin) == 0;
     }
 
@@ -77,8 +78,8 @@ namespace RekaCipta {
     //% weight=7
     export function BuzzerTone(Tone: number): void {
         let BuzzerPin = AnalogPin.P16;
-        //pins.analogSetPitchPin(BuzzerPin);
-        pins.analogWritePin(BuzzerPin, 1023);
+        pins.analogSetPitchPin(BuzzerPin);
+        //pins.analogWritePin(BuzzerPin, 1023);
         pins.analogSetPitchVolume(255);
         pins.analogPitch(Tone, 0);
         //pins.analogWritePin(BuzzerPin, Tone);
@@ -86,7 +87,6 @@ namespace RekaCipta {
     }
 
     //% block="Buzzer Off"
-    //% parts="headphone"
     //% group="Output"
     //% weight=6
     export function BuzzerOff(): void {
