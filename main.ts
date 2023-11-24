@@ -1,4 +1,4 @@
-//% color="#E4D00A"
+//% color="#3234a1" icon="\uf2db"
 //% groups="['Sensor','Output']"
 namespace RekaCipta {
     //% block="Button %ButtonChoice pressed"
@@ -72,18 +72,17 @@ namespace RekaCipta {
     }
 
     //% block="Buzzer tone %Tone"
-    //% Tone.defl=100
+    //% Tone.defl=200
     //% parts="headphone"
     //% group="Output"
     //% weight=7
     export function BuzzerTone(Tone: number): void {
         let BuzzerPin = AnalogPin.P16;
-        pins.analogSetPitchPin(BuzzerPin);
-        //pins.analogWritePin(BuzzerPin, 1023);
-        pins.analogSetPitchVolume(255);
-        pins.analogPitch(Tone, 0);
-        //pins.analogWritePin(BuzzerPin, Tone);
-        //pins.analogSetPeriod(BuzzerPin, 500);
+        //pins.analogSetPitchPin(BuzzerPin);
+        //pins.analogSetPitchVolume(255);
+        //pins.analogPitch(Tone, 0);
+        pins.analogWritePin(BuzzerPin, 500);
+        pins.analogSetPeriod(BuzzerPin, Tone);
     }
 
     //% block="Buzzer Off"
@@ -91,9 +90,9 @@ namespace RekaCipta {
     //% weight=6
     export function BuzzerOff(): void {
         let BuzzerPin = AnalogPin.P16;
-        pins.analogSetPitchPin(BuzzerPin);
-        pins.analogPitch(0, 0);
-        //pins.analogWritePin(BuzzerPin, 0);
+        //pins.analogSetPitchPin(BuzzerPin);
+        //pins.analogPitch(0, 0);
+        pins.analogWritePin(BuzzerPin, 0);
     }
 
     //% block="Buzzer note %NoteChoice for %DurationChoice"
