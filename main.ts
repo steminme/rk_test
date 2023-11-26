@@ -73,7 +73,6 @@ namespace RekaCipta {
 
     //% block="Buzzer tone %Tone"
     //% Tone.defl=200
-    //% parts="headphone"
     //% group="Output"
     //% weight=7
     export function BuzzerTone(Tone: number): void {
@@ -96,7 +95,6 @@ namespace RekaCipta {
     }
 
     //% block="Buzzer note %NoteChoice for %DurationChoice"
-    //% parts="headphone"
     //% group="Output"
     //% weight=5
     export function BuzzerNote(NoteChoice: Note, DurationChoice: Duration): void{
@@ -280,7 +278,6 @@ namespace RekaCipta {
         L8 = 7
     }
 
-    PCA9685.reset(PCA9685.chipAddress("0x40"));
     //% block="Servo %ServoChoice move to %Angle"
     //% Angle.defl=90
     //% group="Output"
@@ -297,7 +294,6 @@ namespace RekaCipta {
         Servo3 = 8
     }
 
-    PCA9685.reset(PCA9685.chipAddress("0x40"));
     //% block="Motor %MotorChoice direction %DirectionChoice speed %Speed"
     //% Speed.min=0 Speed.max=255 Speed.defl=255
     //% group="Output"
