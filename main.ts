@@ -279,7 +279,7 @@ namespace RekaCipta {
     }
 
     //% block="Servo %ServoChoice move to %Angle"
-    //% Angle.defl=90
+    //% Angle.min=0 Angle.max=180 Angle.defl=90
     //% group="Output"
     //% weight=2
     export function Servo(ServoChoice: ServoNum, Angle: number): void {
