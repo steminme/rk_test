@@ -1,7 +1,7 @@
 //% color="#3234a1" icon="\uf2db"
 //% groups="['Sensor','Output']"
 namespace RekaCipta {
-    //% block="Button %ButtonChoice pressed"
+    //% block="Button %ButtonChoice Pressed"
     //% group="Sensor"
     //% weight=4
     export function Button(ButtonChoice: ButtonPin): boolean {
@@ -21,7 +21,7 @@ namespace RekaCipta {
         B2
     }
 
-    //% block="Sound Sensor detected sound"
+    //% block="Sound Sensor Detected Sound"
     //% group="Sensor"
     //% weight=3
     export function SoundSensor(): boolean {
@@ -30,7 +30,7 @@ namespace RekaCipta {
         return pins.digitalReadPin(SoundSensorPin) == 0;
     }
 
-    //% block="Potentiometer value"
+    //% block="Potentiometer Value"
     //% group="Sensor"
     //% weight=2
     export function Potentiometer(): number {
@@ -38,7 +38,7 @@ namespace RekaCipta {
         return pins.analogReadPin(PotentiometerPin);
     }
 
-    //% block="Infrared Sensor detected object"
+    //% block="Infrared Sensor Detected Object"
     //% group="Sensor"
     //% weight=1
     export function IrSensor(): boolean {
@@ -71,7 +71,7 @@ namespace RekaCipta {
         OffLED = 0
     }
 
-    //% block="Buzzer tone %Tone"
+    //% block="Buzzer Tone %Tone"
     //% Tone.defl=200
     //% group="Output"
     //% weight=7
@@ -94,42 +94,42 @@ namespace RekaCipta {
         pins.analogWritePin(BuzzerPin, 0);
     }
 
-    //% block="Buzzer note %NoteChoice for %DurationChoice"
+    //% block="Buzzer Note %NoteChoice For %DurationChoice"
     //% group="Output"
     //% weight=5
-    export function BuzzerNote(NoteChoice: Note, DurationChoice: Duration): void{
+    export function BuzzerNote(NoteChoice: Note, DurationChoice: Duration): void {
         let BuzzerPin = AnalogPin.P16;
         pins.analogSetPitchPin(BuzzerPin);
         pins.analogSetPitchVolume(255);
-        switch(DurationChoice){
+        switch (DurationChoice) {
             case Duration.One:
-            pins.analogPitch(NoteChoice, 1 * 1000);
-            basic.pause(1 * 1000 * 1.3);
-            break;
+                pins.analogPitch(NoteChoice, 1 * 1000);
+                basic.pause(1 * 1000 * 1.3);
+                break;
             case Duration.Half:
-            pins.analogPitch(NoteChoice, 0.5 * 1000);
-            basic.pause(0.5 * 1000 * 1.3);
-            break;
+                pins.analogPitch(NoteChoice, 0.5 * 1000);
+                basic.pause(0.5 * 1000 * 1.3);
+                break;
             case Duration.Quarter:
-            pins.analogPitch(NoteChoice, 0.25 * 1000);
-            basic.pause(0.25 * 1000 * 1.3);
-            break;
+                pins.analogPitch(NoteChoice, 0.25 * 1000);
+                basic.pause(0.25 * 1000 * 1.3);
+                break;
             case Duration.Eighth:
-            pins.analogPitch(NoteChoice, 0.125 * 1000);
-            basic.pause(0.125 * 1000 * 1.3);
-            break;
+                pins.analogPitch(NoteChoice, 0.125 * 1000);
+                basic.pause(0.125 * 1000 * 1.3);
+                break;
             case Duration.Sixteenth:
-            pins.analogPitch(NoteChoice, 0.0625 * 1000);
-            basic.pause(0.0625 * 1000 * 1.3);
-            break;
+                pins.analogPitch(NoteChoice, 0.0625 * 1000);
+                basic.pause(0.0625 * 1000 * 1.3);
+                break;
             case Duration.Double:
-            pins.analogPitch(NoteChoice, 2 * 1000);
-            basic.pause(2 * 1000 * 1.3);
-            break;
+                pins.analogPitch(NoteChoice, 2 * 1000);
+                basic.pause(2 * 1000 * 1.3);
+                break;
             case Duration.Quadraple:
-            pins.analogPitch(NoteChoice, 4 * 1000);
-            basic.pause(4 * 1000 * 1.3);
-            break;
+                pins.analogPitch(NoteChoice, 4 * 1000);
+                basic.pause(4 * 1000 * 1.3);
+                break;
         }
     }
     export enum Note {
@@ -224,7 +224,7 @@ namespace RekaCipta {
         DS8 = 4978,
         REST = 0
     }
-    export enum Duration{
+    export enum Duration {
         //% block="One(1)"
         One,
         //% block="Half(1/2)"
@@ -278,7 +278,7 @@ namespace RekaCipta {
         L8 = 7
     }
 
-    //% block="Servo %ServoChoice move to %Angle"
+    //% block="Servo %ServoChoice Move To %Angle"
     //% Angle.min=0 Angle.max=180 Angle.defl=90
     //% group="Output"
     //% weight=2
@@ -294,7 +294,7 @@ namespace RekaCipta {
         Servo3 = 8
     }
 
-    //% block="Motor %MotorChoice direction %DirectionChoice speed %Speed"
+    //% block="Motor %MotorChoice Direction %DirectionChoice Speed %Speed"
     //% Speed.min=0 Speed.max=255 Speed.defl=255
     //% group="Output"
     //% weight=1
@@ -332,4 +332,47 @@ namespace RekaCipta {
         //% block="Backward"
         Backward
     }
+
+/////////////////////////**MORE**/////////////////////////
+
+    let lastTime: number;
+    //% block="Timer Start" advanced=true
+    //% weight=7
+    export function TimerStart(): void {
+        lastTime = control.millis() / 1000;
+    }
+
+    //% block="Timer Time (seconds)" advanced=true
+    //% weight=6
+    export function TimerTime(): number {
+        let timerTime = control.millis() / 1000 - lastTime;
+        return timerTime;
+    }
+/*
+    //% block="Wait %delay Seconds" advanced=true
+    //% delay.defl=1
+    //% weight=6
+    export function Delay(delay: number): void { 
+        basic.pause(delay*1000);
+    }
+
+    //% block="Repeat Until %condition" advanced=true
+    //% handlerStatement
+    //% weight=5
+    export function RepeatUntil(condition: boolean, handler: () => void) {
+        while (!condition) { handler(); }
+    }
+
+    //% block="Wait Until %condition" advanced=true
+    //% weight=4
+    export function WaitUntil(condition: boolean) :void{
+        while (!condition) { }
+    }
+
+    //% block="Serial Port Begin %Baudrate" advanced=true
+    //% weight=3
+    export function SerialBegin(Baudrate: BaudRate){
+
+    }
+    */
 }

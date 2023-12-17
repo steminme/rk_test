@@ -1,23 +1,20 @@
 {
     "name": "RekaCipta",
-    "description": "",
+    "description": "Library for Reka:Cipta Board",
     "dependencies": {
         "core": "*",
-        "radio": "*",
-        "microphone": "*",
         "neopixel": "github:microsoft/pxt-neopixel#v0.7.5",
         "pxt-pca9685": "github:jdarling/pxt-pca9685#v0.0.5"
     },
     "files": [
         "main.ts",
-        "README.md",
-        "main.py"
+        "README.md"
     ],
     "testFiles": [
         "test.ts"
     ],
     "targetVersions": {
-        "target": "6.0.22",
+        "target": "6.0.25",
         "targetId": "microbit"
     },
     "supportedTargets": [
