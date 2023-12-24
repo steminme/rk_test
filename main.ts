@@ -1,5 +1,5 @@
 //% color="#3234a1" icon="\uf2db"
-//% groups="['Sensor','Output']"
+//% groups="['Sensor','Output','More']"
 namespace RekaCipta {
     //% block="Button %ButtonChoice Pressed"
     //% group="Sensor"
@@ -333,46 +333,19 @@ namespace RekaCipta {
         Backward
     }
 
-/////////////////////////**MORE**/////////////////////////
-
     let lastTime: number;
-    //% block="Timer Start" advanced=true
-    //% weight=7
+    //% block="Timer Start"
+    //% group="More"
+    //% weight=2
     export function TimerStart(): void {
         lastTime = control.millis() / 1000;
     }
 
-    //% block="Timer Time (seconds)" advanced=true
-    //% weight=6
+    //% block="Timer Time (seconds)"
+    //% group="More"
+    //% weight=1
     export function TimerTime(): number {
         let timerTime = control.millis() / 1000 - lastTime;
         return timerTime;
     }
-/*
-    //% block="Wait %delay Seconds" advanced=true
-    //% delay.defl=1
-    //% weight=6
-    export function Delay(delay: number): void { 
-        basic.pause(delay*1000);
-    }
-
-    //% block="Repeat Until %condition" advanced=true
-    //% handlerStatement
-    //% weight=5
-    export function RepeatUntil(condition: boolean, handler: () => void) {
-        while (!condition) { handler(); }
-    }
-
-    //% block="Wait Until %condition" advanced=true
-    //% weight=4
-    export function WaitUntil(condition: boolean) :void{
-        while (!condition) { }
-    }
-
-    //% block="Serial Port Begin %Baudrate" advanced=true
-    //% weight=3
-    export function SerialBegin(Baudrate: BaudRate){
-
-    }
-    */
 }
