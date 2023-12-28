@@ -1,6 +1,6 @@
-//% color="#3234a1" icon="\uf2db"
+ //% color="#3234a1" icon="\uf2db"
 //% groups="['Sensor','Output','More']"
-namespace RekaCipta {
+namespace RekaEdukitCipta {
     //% block="Button %ButtonChoice Pressed"
     //% group="Sensor"
     //% weight=4
