@@ -1,5 +1,6 @@
 {
     "name": "RekaEdukitCipta",
+    "version": "1.0.0",
     "description": "Library for Reka:Cipta Board",
     "dependencies": {
         "core": "*",
